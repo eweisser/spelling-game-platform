@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+<title>STORIX People book 2</title>
+
+<!-- read about pointer lock or mouse lock at https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API ...there's also another link in the bookmarks-->
+
+<style>
+
+body {
+  cursor: none;
+  /* background-color: #4CC3FF; */
+  background: url("images/bkgd.png") #4CC3FF;
+  /* background-image: url("images/bkgd.png"); */
+  background-position: 100px 100px;
+  background-size: 1px 1px;
+  background-repeat: no-repeat;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  scroll-behavior: smooth;
+}
+
+#characterCursor {
+  display: none;
+  position: absolute;
+  left: 3vw;
+  bottom: 4vh;
+  /* width: 20vw; */
+  height: 30vh;
+}
+
+.grayLetter {
+  height: 20vh;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+#lettersCaptured {
+  background-color: #FFF0;
+  position: absolute;
+  top: 2.5vh;
+  height: 10vh;
+  left: 0;
+  width: 100%;
+  padding-left: 5%;
+  font-size: 12vh;
+  font-family: Impact;
+  animation-name: textOnWordCompletion;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  z-index: 2;
+}
+
+@keyframes textOnWordCompletion {
+  0%    {color: #000; font-size: 12vh; left: 0}
+  40%   {color: #390; font-size: 48vh; left: -50vw}
+  60%   {color: #390; font-size: 48vh; left: -50vw}
+  100%  {color: #000; font-size: 12vh; left: 0}
+}
+
+#movingLetter {
+  position: absolute;
+  display: none;
+  left: 8vw;
+  bottom: 100vh;
+  width: 15vw;
+  animation-name: movingLetterRiseFall;
+  animation-duration: 4.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes movingLetterRiseFall {
+  0%    {bottom: 105vh;}
+  100%  {bottom: -30vh;}
+}
+
+@keyframes fadeAway {
+  0%    {opacity: 1;}
+  100%  {opacity: 0;}
+}
+
+#movingLetter2 {
+  animation-play-state: running;
+  display: none;
+  position: absolute;
+  left: 35vw;
+  bottom: 100vh;
+  width: 15vw;
+  animation-name: movingLetterRiseFall2;
+  animation-duration: 4.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-delay: 1.5s;
+}
+
+@keyframes movingLetterRiseFall2 {
+  0%    {bottom: 105vh;}
+  100%  {bottom: -30vh;}
+}
+
+#movingLetter3 {
+  animation-play-state: running;
+  display: none;
+  position: absolute;
+  left: 62vw;
+  bottom: 100vh;
+  width: 15vw;
+  animation-name: movingLetterRiseFall3;
+  animation-duration: 4.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-delay: 3s;
+}
+
+@keyframes movingLetterRiseFall3 {
+  0%    {bottom: 105vh;}
+  100%  {bottom: -30vh;}
+}
+
+#stripe_red {
+  background-color: #FF000000;
+  position: absolute;
+  left: 0;
+  top: 0vh;
+  height: 100vh;
+  width: 8vw;
+}
+
+#stripe_yellow {
+  background-color: #FFFF0000;
+  position: absolute;
+  left: 23vw;
+  top: 0;
+  height: 100vh;
+  width: 12vw;
+}
+
+#stripe_green {
+  background-color: #55CC4400;
+  position: absolute;
+  left: 50vw;
+  top: 0vh;
+  height: 100vh;
+  width: 12vw;
+}
+
+#stripe_blue {
+  background-color: #0000FF00;
+  position: absolute;
+  left: 77vw;
+  top: 0vh;
+  height: 100vh;
+  width: 8vw;
+}
+
+#sideWhite {
+  position: absolute;
+  display: none;
+  background-color: #FFF;
+  right: 0;
+  top: 0vh;
+  width: 15vw;
+  height: 100vh;
+}
+
+span {
+font: #000000;
+font-size: 24px;
+display: inline-block;
+}
+
+#wholescreen {
+  /* background-image: url("images/bkgd1.jpg"); */
+  background-size: 85% 100%;
+  position: fixed;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+}
+
+#acceptableArea {
+  position: absolute;
+  background-color: #FF000000;
+  top: 45vh;
+  left: 30vw;
+  height: 10vh;
+  width: 20vw;
+}
+
+@keyframes correctKidRiseFall {
+  0%    {top: 100vh;}
+  50%    {top: 55vh;}
+  100%  {top: 100vh;}
+}
+
+@keyframes incorrectKidRiseFall {
+  0%    {top: 100vh;}
+  50%    {top: 55vh;}
+  100%  {top: 100vh;}
+}
+
+#wrongX {
+  display: none;
+  width: 36vw;
+  /* height: 30vh; */
+  position: absolute;
+  left: 20vw;
+  top: 55vh;
+}
+
+#startingCurtain {
+  cursor: default;
+  background-color: #555555;
+  display: block;
+  position: fixed;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  text-align: center;
+  font-family: "Georgia","Wide Latin";
+  font-weight: bold;
+  color: #F00;
+  font-size: 10vw;
+  text-shadow: 4px 8px #600000;
+  animation-name: gameStartScreenUp;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes gameStartScreenUp {
+  0%    {top: 0;}
+  100%  {top: -100vh;}
+}
+
+#hippoStartGif {
+  position: absolute;
+  z-index: -1;
+  bottom: 10vh;
+  height: 80vh;
+  left: 0vw;
+}
+
+#letterSelectionCurtain {
+  cursor: default;
+  background-color: #FFFFFF88;
+  display: none;
+  position: fixed;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  text-align: center;
+  font-family: "Georgia","Wide Latin";
+  font-weight: bold;
+  color: #F00;
+  font-size: 5vw;
+  animation-name: gameStartScreenUp;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes gameStartScreenUp {
+  0%    {top: 0;}
+  100%  {top: -100vh;}
+}
+
+#pickALetterText {
+  /* background-color: #FF0; */
+  height: 25vh;
+  line-height: 30vh;
+}
+
+#pickALetterImagesRow1 {
+  /* background-color: #FC0; */
+  margin-bottom: 5vh;
+}
+
+#gameOverScreen {
+  background-color: #90D8FF;
+  font-size: 15vw;
+  text-align: center;
+  display: block;
+  position: fixed;
+  font-family: "Arial";
+  font-weight: bold;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  animation-name: gameOverScreenDrop;
+  animation-play-state: paused;
+  animation-duration: 1.2s;
+  animation-timing-function: linear;
+}
+
+@keyframes gameOverScreenDrop {
+  0%    {top: -100vh;}
+  100%  {top: 0vh;}
+}
+
+#happyHippoGif {
+  position: absolute;
+  bottom: 5vh;
+  height: 55vh;
+  left: 0vw;
+}
+
+/*
+#hitbox {
+  position: absolute;
+  top: 0;
+  width: 10vh;
+  height: 10vh;
+  border: 4px solid #5AF;
+}
+*/
+
+
+
+
+</style>
+
+</head>
+
+<script>
+
+var groundHeight;
+var userHzPos = 0;
+var userVtPos;
+var onSurface = true;
+
+var miniAlphabet = ["A","A","B","C","H","R","T","T"];
+var vocabulary = ["cat","chat","hat","rat","bat1","bat2"];
+// words are: (j)et, (n)et, (p)et, (v)et, (g)reen, (y)ellow, bl(u)e, pl(a)net (8)
+var vocabWordAfterSplit = ["I","AIL","UNK","OON","OPE","ADIUM","AME","INNER"];
+var vocabularyTargetLetter = ["K","N","K","P","L","T","N","W"];
+var recentLetterRecord = [];
+var currentVocabWord = "";
+
+var randomNo;
+
+var randomLetterImgFile = "images/letterK.png";
+var currentVocabularyIndex = 0;
+
+window.onload = function() {
+
+  var windowWidth = window.innerWidth;
+  var windowHeight = window.innerHeight;
+  var doubleWindowWidth = windowWidth*2;
+  var doubleWindowHeight = windowHeight*2;
+
+
+  document.body.style.backgroundSize = doubleWindowWidth + "px " + doubleWindowHeight + "px";
+  //document.body.style.backgroundPosition = (0-windowWidth) + "px " + (0-windowHeight) + "px";   // this was to have the lower right quadrant as the initial view
+  document.body.style.backgroundPosition = "0px " + (0-windowHeight) + "px";
+
+  groundHeight = 4;
+  userVtPos = groundHeight;
+
+  // console.log("userVtPos is: " + userVtPos);
+  // console.log("groundHeight is: " + groundHeight);
+
+  //console.log(heightOfStaticLetters);
+  //document.getElementById("wrongX").style.height = heightOfStaticLetters + "px";
+
+  var lettersCaptured = document.getElementById('lettersCaptured');
+  lettersCaptured.addEventListener('animationiteration', function() {
+      document.getElementById("lettersCaptured").innerHTML = "";
+      var newWordArray = generateRandomVocabWord();
+      var vocabWordItself = newWordArray[1];
+
+      var indexOfChosenVocabWord = vocabulary.indexOf(vocabWordItself);
+      vocabulary.splice(indexOfChosenVocabWord, 1);
+
+      document.getElementById("lettersCaptured").style.animationPlayState = "paused";
+  });
+
+  var hippoStartGifPos = document.getElementById("hippoStartGif").getBoundingClientRect();
+  var bodyDimensions = document.body.getBoundingClientRect();
+  document.getElementById("hippoStartGif").style.left = (bodyDimensions.width-hippoStartGifPos.width)/2 + "px";
+
+  var happyHippoGifPos = document.getElementById("happyHippoGif").getBoundingClientRect();
+  document.getElementById("happyHippoGif").style.left = (bodyDimensions.width-happyHippoGifPos.width)/2 + "px";
+
+
+}     ///////////////////// END OF window.onload FUNCTION /////////////////////////////////////////////////
+
+function startingHippoGoUp() {
+  document.getElementById("startingCurtain").style.animationPlayState = "running";
+  document.getElementById("letterSelectionCurtain").style.display = "block";
+  //window.setTimeout(displayAfterStart, 1250);
+}
+
+function startJump() {
+  if (onSurface) {
+    jump(3.2);
+  }
+}
+
+function jump(velocity) {
+  console.log("jump activated");
+  if (document.getElementById("characterCursor").style.display == "block") {     // if movingLetter has appeared on screen...
+    onSurface = false;
+    if (velocity == 3.2) {
+      boingSound.play();
+    }
+
+    if (userHzPos >= 0.659 && userHzPos <= 0.837 && userVtPos > 168) {            // "pet" cloud
+        if (userVtPos + velocity < 168) {
+          userVtPos = 168;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.741 && userHzPos <= 0.959 && userVtPos > 125) {            // "net" cloud
+        if (userVtPos + velocity < 125) {
+          userVtPos = 125;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.199 && userHzPos <= 0.448 && userVtPos > 131) {            // "blue/yellow" cloud
+        if (userVtPos + velocity < 131) {
+          userVtPos = 131;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.070 && userHzPos <= 0.272 && userVtPos > 87) {            // "planet" cloud
+        if (userVtPos + velocity < 87) {
+          userVtPos = 87;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.403 && userHzPos <= 0.715 && userVtPos > 76) {            // "green/vet" cloud
+        if (userVtPos + velocity < 76) {
+          userVtPos = 76;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.78 && userVtPos > 46) {            // "jet" cloud
+        if (userVtPos + velocity < 46) {
+          userVtPos = 46;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else {
+      if (userVtPos >= groundHeight) {                // user is above the ground
+        if (userVtPos + velocity < groundHeight) {        // but if user is about to hit the ground...
+          userVtPos = groundHeight;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {                        // then user is NOT about to hit the ground, so...
+          drop(velocity);
+        }
+
+      }
+    }
+
+    //   //jump(velocity);
+    // } else if (userVtPos == groundHeight) {
+    //   console.log("userVtPos is equal to groundHeight");
+    // } else if (userVtPos < groundHeight) {
+    //   userVtPos = groundHeight;
+    //   document.getElementById("characterCursor").style.bottom = userVtPos + "vh";
+    // }
+
+    //window.setTimeout(function(){smashedPicture.remove(); }, 1500);
+
+    // var hippoPos = document.getElementById("characterCursor").getBoundingClientRect();
+    // var melon1Pos = document.getElementById("movingLetter").getBoundingClientRect();
+    // var melon2Pos = document.getElementById("movingLetter2").getBoundingClientRect();
+    // var melon3Pos = document.getElementById("movingLetter3").getBoundingClientRect();
+    // if (melon1Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon1Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon1Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon1Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
+    //   successfulBite(document.getElementById("movingLetter"));
+    // }
+    // else if (melon2Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon2Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon2Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon2Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
+    //   successfulBite(document.getElementById("movingLetter2"));
+    // }
+    // else if (melon3Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon3Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon3Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon3Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
+    //   successfulBite(document.getElementById("movingLetter3"));
+    // }
+    // window.setTimeout(closeMouth, 500);
+  }
+}
+
+function drop(velocity) {
+  //alert(userHzPos);
+  userVtPos = userVtPos + velocity;
+  velocity = velocity - 0.1;
+  // document.getElementById("characterCursor").style.bottom = userVtPos + "vh";
+  drawScreen();
+  window.setTimeout(jump,10,velocity);      // update screen with new position every 10 milliseconds / 100 times a second.
+}
+
+function drawScreen() {
+  // document.body.style.backgroundPosition = (windowWidth/2 - x) + "px " + (0-windowHeight) + "px";
+  var currentBackgroundPos = document.body.style.backgroundPosition;    // horizontalShiftpx verticalShiftpx
+  var currentHorizontalShift = currentBackgroundPos.slice(0,currentBackgroundPos.indexOf(" ")+1);
+  var currentVerticalShift = Number(currentBackgroundPos.slice(currentBackgroundPos.indexOf(" ")+1,-2));
+  // alert(currentVerticalShift);
+  var amountToVShiftInPx = 0;
+  var characterCursorVtScreenPos = userVtPos;
+  if (userVtPos > 50) {
+    characterCursorVtScreenPos = 50;
+    amountToVShiftInPx = (userVtPos*window.innerHeight/100) - (50*window.innerHeight/100);
+    // userVtPos = 66.67;
+    //
+  }
+  var newVerticalShift = (0-window.innerHeight) + amountToVShiftInPx;
+  //alert(newVerticalShift);
+  document.body.style.backgroundPosition = currentHorizontalShift + newVerticalShift + "px";
+  document.getElementById("characterCursor").style.bottom = characterCursorVtScreenPos + "vh";
+
+  // -494px -607px
+}
+
+function wordSpelledSuccessfully() {
+  document.getElementById("lettersCaptured").style.animationPlayState = "running";  // run the animation of the just-spelled word enlarging
+  document.getElementById("movingLetter").style.animationPlayState = "paused";
+  document.getElementById("movingLetter").style.opacity = "0";
+  document.getElementById("movingLetter2").style.animationPlayState = "paused";
+  document.getElementById("movingLetter2").style.opacity = "0";
+  document.getElementById("movingLetter3").style.animationPlayState = "paused";
+  document.getElementById("movingLetter3").style.opacity = "0";
+}
+
+function pickLetter(pickedLetter) {
+  document.getElementById("letterSelectionCurtain").style.display = "none";
+  document.getElementById("characterCursor").style.display = "block";
+  document.getElementById("characterCursor").src = "images/letter" + pickedLetter + ".png";
+
+  var windowWidth = window.innerWidth;
+  var windowHeight = window.innerHeight;
+  var doubleWindowWidth = windowWidth*2;
+  var doubleWindowHeight = windowHeight*2;
+
+  var cursor = document.getElementById('characterCursor');    // my window is 1280 by ?
+  document.addEventListener('mousemove', function(e){
+      var x = 2*e.clientX;    // we've set x to be twice the actual position of the cursor, so that "x" represents the
+                      // character's horizontal position in the world we've made.
+      var currentBackgroundPos = document.body.style.backgroundPosition;    // horizontalShiftpx verticalShiftpx
+      var currentVerticalShift = Number(currentBackgroundPos.slice(currentBackgroundPos.indexOf(" ")+1,-2));
+
+      // Let's handle the background sliding first.
+      if (x < windowWidth/2) {
+        document.body.style.backgroundPosition = "0px " + currentVerticalShift + "px";
+      } else if (x >= windowWidth/2 && x <= windowWidth*3/2) {    // if the character is 1/4 to 3/4 across the world...
+        document.body.style.backgroundPosition = (windowWidth/2 - x) + "px " + currentVerticalShift + "px";
+      } else if (x >= windowWidth*3/2) {
+        document.body.style.backgroundPosition = (0 - windowWidth) + "px " + currentVerticalShift + "px";
+      }
+
+      // Now, the character/cursor.
+      if (x < windowWidth/2) {    // in our case, if x > 640
+                                    // since the window is half the width of the world, this means "when the character is halfway
+                                    // across the initial screen / 1/4 across the world
+        cursor.style.left = x + "px";
+      } else if (x >= windowWidth/2 && x <= windowWidth*3/2) {    // if the character is 1/4 to 3/4 across the world...
+        cursor.style.left = windowWidth/2 + "px";
+      } else if (x >= windowWidth*3/2) {      // if the character is more than 3/4 of the way across the world...
+        cursor.style.left = x-windowWidth + "px";
+      }
+      userHzPos = x/(windowWidth*2);
+
+      checkIfCompletingWord();
+      if (onSurface) {
+        checkIfNeedsToFall();
+      }
+  });
+}
+
+function colorLetter(whichLetter) {
+  var image = document.getElementById("candidate" + whichLetter);
+  image.src = "images/letter" + whichLetter + ".png";
+}
+
+function getGrayLetter(whichLetter) {
+  var image = document.getElementById("candidate" + whichLetter);
+  image.src = "images/gray" + whichLetter + ".png";
+}
+
+function checkIfCompletingWord() {
+  var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
+  if (userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
+    if (letterOfCursor == "A") {
+      alert("Good job!");
+    }
+  }
+}
+
+function checkIfNeedsToFall() {
+  if (onCloudJet() || onCloudVetGreen() || onCloudPlanet() || onCloudBlueYellow() || onCloudNet() || onCloudPet() ) {
+    ;
+  } else {
+    jump(0);
+  }
+}
+
+function onCloudJet() {
+  if (userHzPos >= 0.78 && userVtPos == 46) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudVetGreen() {
+  if (userHzPos >= 0.38 && userHzPos <= 0.715 && userVtPos == 76) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudPlanet() {
+  if (userHzPos >= 0.070 && userHzPos <= 0.272 && userVtPos == 87) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudBlueYellow() {
+  if (userHzPos >= 0.199 && userHzPos <= 0.448 && userVtPos == 131) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudNet() {
+  if (userHzPos >= 0.741 && userHzPos <= 0.959 && userVtPos == 125) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudPet() {
+  if (userHzPos >= 0.659 && userHzPos <= 0.837 && userVtPos == 168) {
+    return true;
+  }
+  return false;
+}
+
+</script>
+
+<body onmousedown=startJump()>
+  <!-- normally 3.2, a good test value for seeing more is 5 -->
+
+<audio id="boingSound">
+<source src="sounds/boing.wav" type="audio/wav">
+</audio>
+
+<div id="wholescreen">
+
+<div id="sideWhite">
+<div id="lettersCaptured"></div>
+</div>
+
+<div id="stripe_red"></div>
+<div id="stripe_yellow"></div>
+<div id="stripe_green"></div>
+<div id="stripe_blue"></div>
+
+<img id="characterCursor" src="images/letterJ.png">
+
+<div id="acceptableArea"></div>
+
+<!-- <img id="wrongX" src="images/wrongX.png"> -->
+
+</div> <!-- this is the WHOLESCREEN div -->
+
+<div id="letterSelectionCurtain">
+<div id="pickALetterText">Pick a letter!</div>
+<div id="pickALetterImagesRow1">
+<img id="candidateA" class="grayLetter" src="images/grayA.png" onclick="pickLetter('A')" onmouseover="colorLetter('A')" onmouseout="getGrayLetter('A')">
+<img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
+<img id="candidateJ" class="grayLetter" src="images/grayJ.png" onclick="pickLetter('J')" onmouseover="colorLetter('J')" onmouseout="getGrayLetter('J')">
+<img id="candidateN" class="grayLetter" src="images/grayN.png" onclick="pickLetter('N')" onmouseover="colorLetter('N')" onmouseout="getGrayLetter('N')">
+</div>
+<div id="pickALetterImagesRow2">
+<img id="candidateP" class="grayLetter" src="images/grayP.png" onclick="pickLetter('P')" onmouseover="colorLetter('P')" onmouseout="getGrayLetter('P')">
+<img id="candidateU" class="grayLetter" src="images/grayU.png" onclick="pickLetter('U')" onmouseover="colorLetter('U')" onmouseout="getGrayLetter('U')">
+<img id="candidateV" class="grayLetter" src="images/grayV.png" onclick="pickLetter('V')" onmouseover="colorLetter('V')" onmouseout="getGrayLetter('V')">
+<img id="candidateY" class="grayLetter" src="images/grayY.png" onclick="pickLetter('Y')" onmouseover="colorLetter('Y')" onmouseout="getGrayLetter('Y')">
+</div>
+</div>
+
+<div id="startingCurtain">
+<img id="hippoStartGif" src="images/startingPic.gif" onclick="startingHippoGoUp()">
+SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
+</div>
+
+<div id="gameOverScreen">
+  GOOD JOB!
+<img id="happyHippoGif" src="images/happy2.gif">
+</div>
+
+<div id="hitbox"></div>
+
+
+
+
+</body>
+</html>
