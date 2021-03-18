@@ -9,7 +9,7 @@
 <style>
 
 body {
-  cursor: none;
+  /* cursor: none; */
   /* background-color: #4CC3FF; */
   background: url("images/bkgd.png") #4CC3FF;
   /* background-image: url("images/bkgd.png"); */
@@ -422,7 +422,7 @@ function jump(velocity) {
       boingSound.play();
     }
 
-    if (userHzPos >= 0.659 && userHzPos <= 0.837 && userVtPos > 168) {            // "pet" cloud
+    if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos > 168) {            // "pet" cloud
         if (userVtPos + velocity < 168) {
           userVtPos = 168;
           velocity = 0;
@@ -431,7 +431,7 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.741 && userHzPos <= 0.959 && userVtPos > 125) {            // "net" cloud
+    } else if (userHzPos >= 0.68 && userHzPos <= 0.959 && userVtPos > 125) {            // "net" cloud
         if (userVtPos + velocity < 125) {
           userVtPos = 125;
           velocity = 0;
@@ -440,7 +440,7 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.199 && userHzPos <= 0.448 && userVtPos > 131) {            // "blue/yellow" cloud
+    } else if (userHzPos >= 0.17 && userHzPos <= 0.4388 && userVtPos > 131) {            // "blue/yellow" cloud
         if (userVtPos + velocity < 131) {
           userVtPos = 131;
           velocity = 0;
@@ -449,7 +449,7 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.070 && userHzPos <= 0.272 && userVtPos > 87) {            // "planet" cloud
+    } else if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos > 87) {            // "planet" cloud
         if (userVtPos + velocity < 87) {
           userVtPos = 87;
           velocity = 0;
@@ -458,7 +458,7 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.403 && userHzPos <= 0.715 && userVtPos > 76) {            // "green/vet" cloud
+    } else if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos > 76) {            // "vet/green" cloud
         if (userVtPos + velocity < 76) {
           userVtPos = 76;
           velocity = 0;
@@ -619,6 +619,22 @@ function checkIfCompletingWord() {
     if (letterOfCursor == "A") {
       alert("Good job!");
     }
+  } else if (userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
+    if (letterOfCursor == "G") {
+      alert("Good job!");
+    }
+  } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
+    if (letterOfCursor == "J") {
+      alert("Good job!");
+    }
+  } else if (userHzPos >= 0.72 && userHzPos <= 0.738 && userVtPos < 125.1 && userVtPos > 124.9) {
+    if (letterOfCursor == "N") {
+      alert("Good job!");
+    }
+  } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
+    if (letterOfCursor == "P") {
+      alert("Good job!");
+    }
   }
 }
 
@@ -638,35 +654,35 @@ function onCloudJet() {
 }
 
 function onCloudVetGreen() {
-  if (userHzPos >= 0.38 && userHzPos <= 0.715 && userVtPos == 76) {
+  if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos == 76) {
     return true;
   }
   return false;
 }
 
 function onCloudPlanet() {
-  if (userHzPos >= 0.070 && userHzPos <= 0.272 && userVtPos == 87) {
+  if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos == 87) {
     return true;
   }
   return false;
 }
 
 function onCloudBlueYellow() {
-  if (userHzPos >= 0.199 && userHzPos <= 0.448 && userVtPos == 131) {
+  if (userHzPos >= 0.17 && userHzPos <= 0.4388 && userVtPos == 131) {
     return true;
   }
   return false;
 }
 
 function onCloudNet() {
-  if (userHzPos >= 0.741 && userHzPos <= 0.959 && userVtPos == 125) {
+  if (userHzPos >= 0.68 && userHzPos <= 0.959 && userVtPos == 125) {
     return true;
   }
   return false;
 }
 
 function onCloudPet() {
-  if (userHzPos >= 0.659 && userHzPos <= 0.837 && userVtPos == 168) {
+  if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos == 168) {
     return true;
   }
   return false;
