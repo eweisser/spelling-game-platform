@@ -220,7 +220,10 @@ display: inline-block;
 
 #startingCurtain {
   cursor: default;
-  background-color: #555555;
+  background-color: #000;
+  background-image: url("images/curtain.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: block;
   position: fixed;
   left: 0%;
@@ -249,8 +252,8 @@ display: inline-block;
 #hippoStartGif {
   position: absolute;
   z-index: -1;
-  bottom: 10vh;
-  height: 80vh;
+  bottom: 15vh;
+  height: 55vh;
   left: 0vw;
 }
 
@@ -268,7 +271,7 @@ display: inline-block;
   font-weight: bold;
   color: #F00;
   font-size: 5vw;
-  animation-name: gameStartScreenUp;
+  animation-name: letterSelectionCurtainUp;
   animation-play-state: paused;
   animation-iteration-count: 1;
   animation-duration: 1.2s;
@@ -276,9 +279,26 @@ display: inline-block;
   animation-timing-function: linear;
 }
 
-@keyframes gameStartScreenUp {
+@keyframes letterSelectionCurtainUp {
   0%    {top: 0;}
   100%  {top: -100vh;}
+}
+
+@keyframes letterSelectionCurtainDown {
+  0%    {top: 0;}
+  100%  {top: -100vh;}
+}
+
+#letterSelectionInnerBkgd {
+  background-color: #FFF;
+  border: 5px solid black;
+  border-radius: 5%;
+  position: absolute;
+  top: 5%;
+  left: 15%;
+  width: 70%;
+  height: 80%;
+  z-index: -1;
 }
 
 #pickALetterText {
@@ -559,7 +579,7 @@ function wordSpelledSuccessfully() {
 }
 
 function pickLetter(pickedLetter) {
-  document.getElementById("letterSelectionCurtain").style.display = "none";
+  document.getElementById("letterSelectionCurtain").style.animationPlayState = "running";
   document.getElementById("characterCursor").style.display = "block";
   document.getElementById("characterCursor").src = "images/letter" + pickedLetter + ".png";
 
@@ -617,7 +637,9 @@ function checkIfCompletingWord() {
   var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
   if (userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
     if (letterOfCursor == "A") {
-      alert("Good job!");
+      //alert("Good job!");
+      curtainDrop();
+      showLetterACorrect();
     }
   } else if (userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
     if (letterOfCursor == "G") {
@@ -717,6 +739,7 @@ function onCloudPet() {
 </div> <!-- this is the WHOLESCREEN div -->
 
 <div id="letterSelectionCurtain">
+<div id="letterSelectionInnerBkgd"></div>
 <div id="pickALetterText">Pick a letter!</div>
 <div id="pickALetterImagesRow1">
 <img id="candidateA" class="grayLetter" src="images/grayA.png" onclick="pickLetter('A')" onmouseover="colorLetter('A')" onmouseout="getGrayLetter('A')">
