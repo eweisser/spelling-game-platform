@@ -21,6 +21,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 #characterCursor {
@@ -312,6 +313,33 @@ display: inline-block;
   margin-bottom: 5vh;
 }
 
+#fullScreenVocabPic {
+  cursor: default;
+  display: block;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0vw;
+  top: 100vh;
+  /* text-align: center;
+  font-family: "Georgia","Wide Latin";
+  font-weight: bold; */
+  /* color: #F00;
+  font-size: 5vw; */
+
+  animation-name: fullScreenVocabPicGoUp;
+  animation-play-state: paused;
+  animation-iteration-count: infinite;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes fullScreenVocabPicGoUp {
+  0%    {top: 100vh;}
+  100%  {top: 0vh;}
+}
+
 #gameOverScreen {
   background-color: #90D8FF;
   font-size: 15vw;
@@ -418,6 +446,10 @@ window.onload = function() {
 
   var happyHippoGifPos = document.getElementById("happyHippoGif").getBoundingClientRect();
   document.getElementById("happyHippoGif").style.left = (bodyDimensions.width-happyHippoGifPos.width)/2 + "px";
+
+  fullScreenVocabPic.addEventListener('animationend', () => {
+    document.getElementById("fullScreenVocabPic").style.animationPlayState = "paused";
+  });
 
 
 }     ///////////////////// END OF window.onload FUNCTION /////////////////////////////////////////////////
@@ -638,24 +670,33 @@ function checkIfCompletingWord() {
   if (userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
     if (letterOfCursor == "A") {
       //alert("Good job!");
-      curtainDrop();
+      showVocabPicFullScreen(letterOfCursor);
       showLetterACorrect();
     }
   } else if (userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
     if (letterOfCursor == "G") {
-      alert("Good job!");
+      showVocabPicFullScreen(letterOfCursor);
+      showLetterACorrect();
     }
   } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
     if (letterOfCursor == "J") {
-      alert("Good job!");
+      showVocabPicFullScreen(letterOfCursor);
+      showLetterACorrect();
     }
   } else if (userHzPos >= 0.72 && userHzPos <= 0.738 && userVtPos < 125.1 && userVtPos > 124.9) {
     if (letterOfCursor == "N") {
-      alert("Good job!");
+      showVocabPicFullScreen(letterOfCursor);
+      showLetterACorrect();
     }
   } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
     if (letterOfCursor == "P") {
-      alert("Good job!");
+      showVocabPicFullScreen(letterOfCursor);
+      showLetterACorrect();
+    }
+  } else if (userHzPos >= 0.193 && userHzPos <= 0.207 && userVtPos < 131.1 && userVtPos > 130.9) {
+    if (letterOfCursor == "U") {
+      showVocabPicFullScreen(letterOfCursor);
+      showLetterACorrect();
     }
   }
 }
@@ -710,9 +751,31 @@ function onCloudPet() {
   return false;
 }
 
+function showVocabPicFullScreen(letterOfCursor) {
+  switch (letterOfCursor) {
+    case "A":
+      document.getElementById("fullScreenVocabPic").src = "images/planet.jpg";
+      break;
+    case "G":
+      document.getElementById("fullScreenVocabPic").src = "images/green.png";
+      break;
+    case "J":
+      document.getElementById("fullScreenVocabPic").src = "images/jet.jpg";
+      break;
+    case "N":
+      document.getElementById("fullScreenVocabPic").src = "images/net.jpg";
+      break;
+  }
+  document.getElementById("fullScreenVocabPic").style.animationPlayState = "running";
+}
+
+function getRidOfFullScreenVocabPic(imgElement) {
+
+}
+
 </script>
 
-<body onmousedown=startJump()>
+<body onmousedown="startJump()">
   <!-- normally 3.2, a good test value for seeing more is 5 -->
 
 <audio id="boingSound">
@@ -759,6 +822,8 @@ function onCloudPet() {
 <img id="hippoStartGif" src="images/startingPic.gif" onclick="startingHippoGoUp()">
 SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 </div>
+
+<img id="fullScreenVocabPic" src="x.png" onclick="getRidOfFullScreenVocabPic(this)">
 
 <div id="gameOverScreen">
   GOOD JOB!
