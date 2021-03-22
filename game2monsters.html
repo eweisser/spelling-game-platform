@@ -10,9 +10,9 @@
 
 body {
   /* cursor: none; */
-  /* background-color: #4CC3FF; */
-  background: url("images/bkgd.png") #4CC3FF;
-  /* background-image: url("images/bkgd.png"); */
+  background-color: #4CC3FF;
+  /* background: url("images/bkgd2.png") #4CC3FF; */
+  background-image: url("images/bkgd2.png");
   background-position: 100px 100px;
   background-size: 1px 1px;
   background-repeat: no-repeat;
@@ -180,7 +180,6 @@ display: inline-block;
 }
 
 #wholescreen {
-  /* background-image: url("images/bkgd1.jpg"); */
   background-size: 85% 100%;
   position: fixed;
   left: 0%;
@@ -221,7 +220,6 @@ display: inline-block;
 
 #startingCurtain {
   cursor: default;
-  background-color: #000;
   background-image: url("images/curtain.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -266,28 +264,12 @@ display: inline-block;
   left: 0%;
   width: 100%;
   height: 100%;
-  top: 0px;
+  bottom: 0px;
   text-align: center;
   font-family: "Georgia","Wide Latin";
   font-weight: bold;
   color: #F00;
   font-size: 5vw;
-  animation-name: letterSelectionCurtainUp;
-  animation-play-state: paused;
-  animation-iteration-count: 1;
-  animation-duration: 1.2s;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear;
-}
-
-@keyframes letterSelectionCurtainUp {
-  0%    {top: 0;}
-  100%  {top: -100vh;}
-}
-
-@keyframes letterSelectionCurtainDown {
-  0%    {top: 0;}
-  100%  {top: -100vh;}
 }
 
 #letterSelectionInnerBkgd {
@@ -327,12 +309,12 @@ display: inline-block;
   /* color: #F00;
   font-size: 5vw; */
 
-  animation-name: fullScreenVocabPicGoUp;
+  /* animation-name: fullScreenVocabPicGoUp;
   animation-play-state: paused;
   animation-iteration-count: infinite;
   animation-duration: 1.2s;
   animation-fill-mode: forwards;
-  animation-timing-function: linear;
+  animation-timing-function: linear; */
 }
 
 @keyframes fullScreenVocabPicGoUp {
@@ -341,7 +323,7 @@ display: inline-block;
 }
 
 #gameOverScreen {
-  background-color: #90D8FF;
+  background-color: #FFFFB4;
   font-size: 15vw;
   text-align: center;
   display: block;
@@ -406,6 +388,7 @@ var randomNo;
 
 var randomLetterImgFile = "images/letterK.png";
 var currentVocabularyIndex = 0;
+var lettersFinished = 0;
 
 window.onload = function() {
 
@@ -421,12 +404,6 @@ window.onload = function() {
 
   groundHeight = 4;
   userVtPos = groundHeight;
-
-  // console.log("userVtPos is: " + userVtPos);
-  // console.log("groundHeight is: " + groundHeight);
-
-  //console.log(heightOfStaticLetters);
-  //document.getElementById("wrongX").style.height = heightOfStaticLetters + "px";
 
   var lettersCaptured = document.getElementById('lettersCaptured');
   lettersCaptured.addEventListener('animationiteration', function() {
@@ -541,31 +518,6 @@ function jump(velocity) {
 
       }
     }
-
-    //   //jump(velocity);
-    // } else if (userVtPos == groundHeight) {
-    //   console.log("userVtPos is equal to groundHeight");
-    // } else if (userVtPos < groundHeight) {
-    //   userVtPos = groundHeight;
-    //   document.getElementById("characterCursor").style.bottom = userVtPos + "vh";
-    // }
-
-    //window.setTimeout(function(){smashedPicture.remove(); }, 1500);
-
-    // var hippoPos = document.getElementById("characterCursor").getBoundingClientRect();
-    // var melon1Pos = document.getElementById("movingLetter").getBoundingClientRect();
-    // var melon2Pos = document.getElementById("movingLetter2").getBoundingClientRect();
-    // var melon3Pos = document.getElementById("movingLetter3").getBoundingClientRect();
-    // if (melon1Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon1Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon1Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon1Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
-    //   successfulBite(document.getElementById("movingLetter"));
-    // }
-    // else if (melon2Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon2Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon2Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon2Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
-    //   successfulBite(document.getElementById("movingLetter2"));
-    // }
-    // else if (melon3Pos.top > (hippoPos.top-hippoPos.height*0.1) && melon3Pos.top < (hippoPos.top+hippoPos.height*0.6) && melon3Pos.left > (hippoPos.left + hippoPos.width*0.21) && melon3Pos.left < (hippoPos.left + hippoPos.width*0.56) ) {
-    //   successfulBite(document.getElementById("movingLetter3"));
-    // }
-    // window.setTimeout(closeMouth, 500);
   }
 }
 
@@ -589,16 +541,13 @@ function drawScreen() {
   if (userVtPos > 50) {
     characterCursorVtScreenPos = 50;
     amountToVShiftInPx = (userVtPos*window.innerHeight/100) - (50*window.innerHeight/100);
-    // userVtPos = 66.67;
-    //
   }
   var newVerticalShift = (0-window.innerHeight) + amountToVShiftInPx;
   //alert(newVerticalShift);
   document.body.style.backgroundPosition = currentHorizontalShift + newVerticalShift + "px";
   document.getElementById("characterCursor").style.bottom = characterCursorVtScreenPos + "vh";
-
-  // -494px -607px
 }
+
 
 function wordSpelledSuccessfully() {
   document.getElementById("lettersCaptured").style.animationPlayState = "running";  // run the animation of the just-spelled word enlarging
@@ -611,7 +560,21 @@ function wordSpelledSuccessfully() {
 }
 
 function pickLetter(pickedLetter) {
-  document.getElementById("letterSelectionCurtain").style.animationPlayState = "running";
+  var letterSelectionCurtainAnimation = setInterval(frame, 5);
+
+  function frame() {
+    var pos = window.getComputedStyle(document.getElementById("letterSelectionCurtain")).bottom;
+    pos = Number(pos.slice(0,-2));
+    if (pos >= window.innerHeight) {
+      document.getElementById("letterSelectionCurtain").style.bottom = window.innerHeight + "px";
+      clearInterval(letterSelectionCurtainAnimation);
+    } else {
+      pos = pos + 10;
+      document.getElementById("letterSelectionCurtain").style.bottom = pos + "px";
+    }
+  }
+
+  document.body.style.backgroundImage = "url('images/bkgd.png')";
   document.getElementById("characterCursor").style.display = "block";
   document.getElementById("characterCursor").src = "images/letter" + pickedLetter + ".png";
 
@@ -667,38 +630,85 @@ function getGrayLetter(whichLetter) {
 
 function checkIfCompletingWord() {
   var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
-  if (userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
-    if (letterOfCursor == "A") {
-      //alert("Good job!");
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
-    }
-  } else if (userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
-    if (letterOfCursor == "G") {
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
-    }
-  } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
-    if (letterOfCursor == "J") {
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
-    }
-  } else if (userHzPos >= 0.72 && userHzPos <= 0.738 && userVtPos < 125.1 && userVtPos > 124.9) {
-    if (letterOfCursor == "N") {
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
-    }
-  } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
-    if (letterOfCursor == "P") {
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
-    }
-  } else if (userHzPos >= 0.193 && userHzPos <= 0.207 && userVtPos < 131.1 && userVtPos > 130.9) {
-    if (letterOfCursor == "U") {
-      showVocabPicFullScreen(letterOfCursor);
-      showLetterACorrect();
+  if (document.getElementById("candidate" + letterOfCursor).style.visibility != "hidden") {
+    if (letterOfCursor == "A" && userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
+        lettersFinished++;
+        document.getElementById("candidateA").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/planet.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+    } else if (letterOfCursor == "G" && userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
+        lettersFinished++;
+        document.getElementById("candidateG").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/green.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+    } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
+      if (letterOfCursor == "J") {
+        lettersFinished++;
+        document.getElementById("candidateJ").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/jet.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
+    } else if (userHzPos >= 0.72 && userHzPos <= 0.738 && userVtPos < 125.1 && userVtPos > 124.9) {
+      if (letterOfCursor == "N") {
+        lettersFinished++;
+        document.getElementById("candidateN").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/net.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
+    } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
+      if (letterOfCursor == "P") {
+        lettersFinished++;
+        document.getElementById("candidateP").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/pet.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
+    } else if (userHzPos >= 0.193 && userHzPos <= 0.207 && userVtPos < 131.1 && userVtPos > 130.9) {
+      if (letterOfCursor == "U") {
+        lettersFinished++;
+        document.getElementById("candidateU").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/blue.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
+    } else if (userHzPos >= 0.415 && userHzPos <= 0.425 && userVtPos < 76.1 && userVtPos > 75.9) {
+      if (letterOfCursor == "V") {
+        lettersFinished++;
+        document.getElementById("candidateV").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/vet.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
+    } else if (userHzPos >= 0.371 && userHzPos <= 0.381 && userVtPos < 131.1 && userVtPos > 130.9) {
+      if (letterOfCursor == "Y") {
+        lettersFinished++;
+        document.getElementById("candidateY").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/yellow.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
     }
   }
+
+  function frame() {
+    var pos = window.getComputedStyle(document.getElementById("fullScreenVocabPic")).top;
+    pos = pos.slice(0,-2);
+    //alert(pos);
+    if (pos <= 0) {
+      document.getElementById("fullScreenVocabPic").style.top = "0px";
+      boingSound.play();
+      setTimeout(function(){
+        if (lettersFinished == 8) {
+          document.getElementById("gameOverScreen").style.animationPlayState = "running";
+        } else {
+          document.getElementById("fullScreenVocabPic").style.top = "100vh";
+          document.getElementById("letterSelectionCurtain").style.bottom = "0px";
+        }
+      }, 2500);
+      clearInterval(showVocabPicFullScreen);
+    } else {
+      //alert(pos);
+      pos = pos - 8;      // this is how fast is moves up the screen
+      document.getElementById("fullScreenVocabPic").style.top = pos + "px";
+    }
+  }
+
 }
 
 function checkIfNeedsToFall() {
@@ -749,24 +759,6 @@ function onCloudPet() {
     return true;
   }
   return false;
-}
-
-function showVocabPicFullScreen(letterOfCursor) {
-  switch (letterOfCursor) {
-    case "A":
-      document.getElementById("fullScreenVocabPic").src = "images/planet.jpg";
-      break;
-    case "G":
-      document.getElementById("fullScreenVocabPic").src = "images/green.png";
-      break;
-    case "J":
-      document.getElementById("fullScreenVocabPic").src = "images/jet.jpg";
-      break;
-    case "N":
-      document.getElementById("fullScreenVocabPic").src = "images/net.jpg";
-      break;
-  }
-  document.getElementById("fullScreenVocabPic").style.animationPlayState = "running";
 }
 
 function getRidOfFullScreenVocabPic(imgElement) {
@@ -823,7 +815,7 @@ function getRidOfFullScreenVocabPic(imgElement) {
 SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 </div>
 
-<img id="fullScreenVocabPic" src="x.png" onclick="getRidOfFullScreenVocabPic(this)">
+<img id="fullScreenVocabPic" src="planet.jpg" onclick="getRidOfFullScreenVocabPic(this)">
 
 <div id="gameOverScreen">
   GOOD JOB!
