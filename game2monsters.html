@@ -303,18 +303,6 @@ display: inline-block;
   height: 100vh;
   left: 0vw;
   top: 100vh;
-  /* text-align: center;
-  font-family: "Georgia","Wide Latin";
-  font-weight: bold; */
-  /* color: #F00;
-  font-size: 5vw; */
-
-  /* animation-name: fullScreenVocabPicGoUp;
-  animation-play-state: paused;
-  animation-iteration-count: infinite;
-  animation-duration: 1.2s;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear; */
 }
 
 @keyframes fullScreenVocabPicGoUp {
@@ -689,10 +677,33 @@ function checkIfCompletingWord() {
   function frame() {
     var pos = window.getComputedStyle(document.getElementById("fullScreenVocabPic")).top;
     pos = pos.slice(0,-2);
-    //alert(pos);
+
     if (pos <= 0) {
+      var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
       document.getElementById("fullScreenVocabPic").style.top = "0px";
-      boingSound.play();
+      switch (letterOfCursor) {
+        case "A":
+          planetSound.play();
+          break;
+        case "G":
+          greenSound.play();
+          break;
+        case "N":
+          netSound.play();
+          break;
+        case "P":
+          petSound.play();
+          break;
+        case "U":
+          blueSound.play();
+          break;
+        case "V":
+          vetSound.play();
+          break;
+        case "Y":
+          yellowSound.play();
+          break;
+      }
       setTimeout(function(){
         if (lettersFinished == 8) {
           document.getElementById("gameOverScreen").style.animationPlayState = "running";
@@ -772,6 +783,38 @@ function getRidOfFullScreenVocabPic(imgElement) {
 
 <audio id="boingSound">
 <source src="sounds/boing.wav" type="audio/wav">
+</audio>
+
+<audio id="planetSound">
+<source src="sounds/planet.wav" type="audio/wav">
+</audio>
+
+<audio id="greenSound">
+<source src="sounds/green.wav" type="audio/wav">
+</audio>
+
+<!-- <audio id="jetSound">
+<source src="sounds/jet.wav" type="audio/wav">
+</audio> -->
+
+<audio id="netSound">
+<source src="sounds/net.wav" type="audio/wav">
+</audio>
+
+<audio id="petSound">
+<source src="sounds/pet.wav" type="audio/wav">
+</audio>
+
+<audio id="blueSound">
+<source src="sounds/blue.wav" type="audio/wav">
+</audio>
+
+<audio id="vetSound">
+<source src="sounds/vet.wav" type="audio/wav">
+</audio>
+
+<audio id="yellowSound">
+<source src="sounds/yellow.wav" type="audio/wav">
 </audio>
 
 <div id="wholescreen">
