@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-<title>STORIX Monsters book 2</title>
+<title>STORIX People book 2</title>
 
 <!-- read about pointer lock or mouse lock at https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API ...there's also another link in the bookmarks-->
 
@@ -127,6 +127,42 @@ body {
   100%  {bottom: -30vh;}
 }
 
+#stripe_red {
+  background-color: #FF000000;
+  position: absolute;
+  left: 0;
+  top: 0vh;
+  height: 100vh;
+  width: 8vw;
+}
+
+#stripe_yellow {
+  background-color: #FFFF0000;
+  position: absolute;
+  left: 23vw;
+  top: 0;
+  height: 100vh;
+  width: 12vw;
+}
+
+#stripe_green {
+  background-color: #55CC4400;
+  position: absolute;
+  left: 50vw;
+  top: 0vh;
+  height: 100vh;
+  width: 12vw;
+}
+
+#stripe_blue {
+  background-color: #0000FF00;
+  position: absolute;
+  left: 77vw;
+  top: 0vh;
+  height: 100vh;
+  width: 8vw;
+}
+
 #sideWhite {
   position: absolute;
   display: none;
@@ -191,7 +227,7 @@ display: inline-block;
   100%  {top: -100vh;}
 }
 
-#hippoStartGif {
+#startingCurtainGif {
   position: absolute;
   z-index: -1;
   bottom: 15vh;
@@ -228,13 +264,11 @@ display: inline-block;
 }
 
 #pickALetterText {
-  /* background-color: #FF0; */
   height: 25vh;
   line-height: 30vh;
 }
 
 #pickALetterImagesRow1 {
-  /* background-color: #FC0; */
   margin-bottom: 5vh;
 }
 
@@ -276,18 +310,11 @@ display: inline-block;
   100%  {top: 0vh;}
 }
 
-#dancingLettersRow1 {
-  background-color: #FC0;
-  height: 15vh;
-}
-
-#dancingLettersRow2 {
-  background-color: #0CF;
-  height: 15vh;
-}
-
-.dancingLetter {
-  height: 100%;
+#dancingLettersGif {
+  position: absolute;
+  bottom: 5vh;
+  height: 55vh;
+  left: 0vw;
 }
 
 
@@ -304,17 +331,11 @@ var userHzPos = 0;
 var userVtPos;
 var onSurface = true;
 
-var miniAlphabet = ["A","A","B","C","H","R","T","T"];
-var vocabulary = ["cat","chat","hat","rat","bat1","bat2"];
-// words are: (j)et, (n)et, (p)et, (v)et, (g)reen, (y)ellow, bl(u)e, pl(a)net (8)
-var vocabWordAfterSplit = ["I","AIL","UNK","OON","OPE","ADIUM","AME","INNER"];
-var vocabularyTargetLetter = ["K","N","K","P","L","T","N","W"];
-var recentLetterRecord = [];
+// words are: (c)rab, (d)ragon, (d)rum, (f)rog, (g)rill, (t)rumpet (#)
 var currentVocabWord = "";
 
 var randomNo;
 
-var randomLetterImgFile = "images/letterK.png";
 var currentVocabularyIndex = 0;
 var lettersFinished = 0;
 
@@ -333,24 +354,12 @@ window.onload = function() {
   groundHeight = 4;
   userVtPos = groundHeight;
 
-  var lettersCaptured = document.getElementById('lettersCaptured');
-  lettersCaptured.addEventListener('animationiteration', function() {
-      document.getElementById("lettersCaptured").innerHTML = "";
-      var newWordArray = generateRandomVocabWord();
-      var vocabWordItself = newWordArray[1];
-
-      var indexOfChosenVocabWord = vocabulary.indexOf(vocabWordItself);
-      vocabulary.splice(indexOfChosenVocabWord, 1);
-
-      document.getElementById("lettersCaptured").style.animationPlayState = "paused";
-  });
-
-  var hippoStartGifPos = document.getElementById("hippoStartGif").getBoundingClientRect();
+  var startingCurtainGifPos = document.getElementById("startingCurtainGif").getBoundingClientRect();
   var bodyDimensions = document.body.getBoundingClientRect();
-  document.getElementById("hippoStartGif").style.left = (bodyDimensions.width-hippoStartGifPos.width)/2 + "px";
+  document.getElementById("startingCurtainGif").style.left = (bodyDimensions.width-startingCurtainGifPos.width)/2 + "px";
 
-  var happyHippoGifPos = document.getElementById("happyHippoGif").getBoundingClientRect();
-  document.getElementById("happyHippoGif").style.left = (bodyDimensions.width-happyHippoGifPos.width)/2 + "px";
+  var dancingLettersGifPos = document.getElementById("dancingLettersGif").getBoundingClientRect();
+  document.getElementById("dancingLettersGif").style.left = (bodyDimensions.width-dancingLettersGifPos.width)/2 + "px";
 
   fullScreenVocabPic.addEventListener('animationend', () => {
     document.getElementById("fullScreenVocabPic").style.animationPlayState = "paused";
@@ -406,9 +415,9 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos > 87) {            // "planet" cloud
-        if (userVtPos + velocity < 87) {
-          userVtPos = 87;
+    } else if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos > 88) {            // "barbecue" cloud
+        if (userVtPos + velocity < 88) {
+          userVtPos = 88;
           velocity = 0;
           onSurface = true;
           drawScreen();
@@ -479,12 +488,6 @@ function drawScreen() {
 
 function wordSpelledSuccessfully() {
   document.getElementById("lettersCaptured").style.animationPlayState = "running";  // run the animation of the just-spelled word enlarging
-  document.getElementById("movingLetter").style.animationPlayState = "paused";
-  document.getElementById("movingLetter").style.opacity = "0";
-  document.getElementById("movingLetter2").style.animationPlayState = "paused";
-  document.getElementById("movingLetter2").style.opacity = "0";
-  document.getElementById("movingLetter3").style.animationPlayState = "paused";
-  document.getElementById("movingLetter3").style.opacity = "0";
 }
 
 function pickLetter(pickedLetter) {
@@ -502,7 +505,7 @@ function pickLetter(pickedLetter) {
     }
   }
 
-  document.body.style.backgroundImage = "url('images/bkgd.png')";
+  document.body.style.backgroundImage = "url('images/bkgdPeople.png')";
   document.getElementById("characterCursor").style.display = "block";
   document.getElementById("characterCursor").src = "images/letter" + pickedLetter + ".png";
 
@@ -559,10 +562,10 @@ function getGrayLetter(whichLetter) {
 function checkIfCompletingWord() {
   var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
   if (document.getElementById("candidate" + letterOfCursor).style.visibility != "hidden") {
-    if (letterOfCursor == "A" && userHzPos >= 0.173 && userHzPos <= 0.188 && userVtPos < 87.1 && userVtPos > 86.9) {
+    if (letterOfCursor == "A" && userHzPos >= 0.057 && userHzPos <= 0.064 && userVtPos < 88.1 && userVtPos > 87.9) {
         lettersFinished++;
         document.getElementById("candidateA").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/planet.png";
+        document.getElementById("fullScreenVocabPic").src = "images/barbecue.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
     } else if (letterOfCursor == "G" && userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
         lettersFinished++;
@@ -622,30 +625,30 @@ function checkIfCompletingWord() {
       var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
       document.getElementById("fullScreenVocabPic").style.top = "0px";
       switch (letterOfCursor) {
-        case "A":
-          planetSound.play();
-          break;
-        case "G":
-          greenSound.play();
-          break;
-        case "N":
-          netSound.play();
-          break;
-        case "P":
-          petSound.play();
-          break;
-        case "U":
-          blueSound.play();
-          break;
-        case "V":
-          vetSound.play();
-          break;
-        case "Y":
-          yellowSound.play();
-          break;
+        // case "A":
+        //   planetSound.play();
+        //   break;
+        // case "G":
+        //   greenSound.play();
+        //   break;
+        // case "N":
+        //   netSound.play();
+        //   break;
+        // case "P":
+        //   petSound.play();
+        //   break;
+        // case "U":
+        //   blueSound.play();
+        //   break;
+        // case "V":
+        //   vetSound.play();
+        //   break;
+        // case "Y":
+        //   yellowSound.play();
+        //   break;
       }
       setTimeout(function(){
-        if (lettersFinished == 2) {
+        if (lettersFinished == 7) {
           document.getElementById("gameOverScreen").style.animationPlayState = "running";
         } else {
           document.getElementById("fullScreenVocabPic").style.top = "100vh";
@@ -655,7 +658,7 @@ function checkIfCompletingWord() {
       clearInterval(showVocabPicFullScreen);
     } else {
       //alert(pos);
-      pos = pos - 8;      // this is how fast is moves up the screen
+      pos = pos - 8;      // this is how fast it moves up the screen
       document.getElementById("fullScreenVocabPic").style.top = pos + "px";
     }
   }
@@ -663,7 +666,7 @@ function checkIfCompletingWord() {
 }
 
 function checkIfNeedsToFall() {
-  if (onCloudJet() || onCloudVetGreen() || onCloudPlanet() || onCloudBlueYellow() || onCloudNet() || onCloudPet() ) {
+  if (onCloudJet() || onCloudVetGreen() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudPet() ) {
     ;
   } else {
     jump(0);
@@ -684,8 +687,8 @@ function onCloudVetGreen() {
   return false;
 }
 
-function onCloudPlanet() {
-  if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos == 87) {
+function onCloudBarbecue() {
+  if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos == 88) {
     return true;
   }
   return false;
@@ -759,20 +762,9 @@ function getRidOfFullScreenVocabPic(imgElement) {
 
 <div id="wholescreen">
 
-<div id="sideWhite">
-<div id="lettersCaptured"></div>
-</div>
-
-<div id="stripe_red"></div>
-<div id="stripe_yellow"></div>
-<div id="stripe_green"></div>
-<div id="stripe_blue"></div>
-
 <img id="characterCursor" src="images/letterJ.png">
 
 <div id="acceptableArea"></div>
-
-<!-- <img id="wrongX" src="images/wrongX.png"> -->
 
 </div> <!-- this is the WHOLESCREEN div -->
 
@@ -781,20 +773,19 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <div id="pickALetterText">Pick a letter!</div>
 <div id="pickALetterImagesRow1">
 <img id="candidateA" class="grayLetter" src="images/grayA.png" onclick="pickLetter('A')" onmouseover="colorLetter('A')" onmouseout="getGrayLetter('A')">
-<img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
-<img id="candidateJ" class="grayLetter" src="images/grayJ.png" onclick="pickLetter('J')" onmouseover="colorLetter('J')" onmouseout="getGrayLetter('J')">
-<img id="candidateN" class="grayLetter" src="images/grayN.png" onclick="pickLetter('N')" onmouseover="colorLetter('N')" onmouseout="getGrayLetter('N')">
+<img id="candidateC" class="grayLetter" src="images/grayC.png" onclick="pickLetter('C')" onmouseover="colorLetter('C')" onmouseout="getGrayLetter('C')">
+<img id="candidateD" class="grayLetter" src="images/grayD.png" onclick="pickLetter('D')" onmouseover="colorLetter('D')" onmouseout="getGrayLetter('D')">
 </div>
 <div id="pickALetterImagesRow2">
-<img id="candidateP" class="grayLetter" src="images/grayP.png" onclick="pickLetter('P')" onmouseover="colorLetter('P')" onmouseout="getGrayLetter('P')">
+<img id="candidateF" class="grayLetter" src="images/grayF.png" onclick="pickLetter('F')" onmouseover="colorLetter('F')" onmouseout="getGrayLetter('F')">
+<img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
+<img id="candidateT" class="grayLetter" src="images/grayT.png" onclick="pickLetter('T')" onmouseover="colorLetter('T')" onmouseout="getGrayLetter('T')">
 <img id="candidateU" class="grayLetter" src="images/grayU.png" onclick="pickLetter('U')" onmouseover="colorLetter('U')" onmouseout="getGrayLetter('U')">
-<img id="candidateV" class="grayLetter" src="images/grayV.png" onclick="pickLetter('V')" onmouseover="colorLetter('V')" onmouseout="getGrayLetter('V')">
-<img id="candidateY" class="grayLetter" src="images/grayY.png" onclick="pickLetter('Y')" onmouseover="colorLetter('Y')" onmouseout="getGrayLetter('Y')">
 </div>
 </div>
 
 <div id="startingCurtain">
-<img id="hippoStartGif" src="images/jumpingA.gif" onclick="startingHippoGoUp()">
+<img id="startingCurtainGif" src="images/jumpingA.gif" onclick="startingHippoGoUp()">
 SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 </div>
 
@@ -802,21 +793,8 @@ SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 
 <div id="gameOverScreen">
   GOOD JOB!
-<div id="dancingLettersRow1">
-<img id="dancingA" class="dancingLetter" src="images/dancingA.gif">
-<img id="dancingG" class="dancingLetter" src="images/dancingG.gif">
-<img id="dancingJ" class="dancingLetter" src="images/dancingJ.gif">
-<img id="dancingN" class="dancingLetter" src="images/dancingN.gif">
+<img id="dancingLettersGif" src="images/happy2.gif">
 </div>
-<div id="dancingLettersRow2">
-<img id="dancingP" class="dancingLetter" src="images/dancingP.gif">
-<img id="dancingU" class="dancingLetter" src="images/dancingU.gif">
-<img id="dancingV" class="dancingLetter" src="images/dancingV.gif">
-<img id="dancingY" class="dancingLetter" src="images/dancingY.gif">
-</div>
-</div>
-
-<div id="hitbox"></div>
 
 
 
