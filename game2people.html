@@ -331,7 +331,7 @@ var userHzPos = 0;
 var userVtPos;
 var onSurface = true;
 
-// words are: (c)rab, (d)ragon, (d)rum, (f)rog, (g)rill, (t)rumpet (#)
+// words are: b(a)rbecue, (c)rab, (d)rum, (f)rog, (g)rill, (t)rumpet, cost(u)me (7)
 var currentVocabWord = "";
 
 var randomNo;
@@ -388,7 +388,7 @@ function jump(velocity) {
       boingSound.play();
     }
 
-    if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos > 168) {            // "pet" cloud
+    if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos > 168) {            // "grill" cloud
         if (userVtPos + velocity < 168) {
           userVtPos = 168;
           velocity = 0;
@@ -424,7 +424,7 @@ function jump(velocity) {
         } else {
           drop(velocity);
         }
-    } else if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos > 76) {            // "vet/green" cloud
+    } else if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos > 76) {            // "costume" cloud
         if (userVtPos + velocity < 76) {
           userVtPos = 76;
           velocity = 0;
@@ -567,11 +567,6 @@ function checkIfCompletingWord() {
         document.getElementById("candidateA").style.visibility = "hidden";
         document.getElementById("fullScreenVocabPic").src = "images/barbecue.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
-    } else if (letterOfCursor == "G" && userHzPos >= 0.618 && userHzPos <= 0.632 && userVtPos < 76.1 && userVtPos > 75.9) {
-        lettersFinished++;
-        document.getElementById("candidateG").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/green.png";
-        var showVocabPicFullScreen = setInterval(frame, 5);
     } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
       if (letterOfCursor == "J") {
         lettersFinished++;
@@ -587,10 +582,10 @@ function checkIfCompletingWord() {
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
     } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
-      if (letterOfCursor == "P") {
+      if (letterOfCursor == "G") {
         lettersFinished++;
-        document.getElementById("candidateP").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/pet.png";
+        document.getElementById("candidateG").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/grill.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
     } else if (userHzPos >= 0.193 && userHzPos <= 0.207 && userVtPos < 131.1 && userVtPos > 130.9) {
@@ -600,13 +595,11 @@ function checkIfCompletingWord() {
         document.getElementById("fullScreenVocabPic").src = "images/blue.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
-    } else if (userHzPos >= 0.415 && userHzPos <= 0.425 && userVtPos < 76.1 && userVtPos > 75.9) {
-      if (letterOfCursor == "V") {
+    } else if (letterOfCursor == "U" && userHzPos >= 0.657 && userHzPos <= 0.667 && userVtPos < 76.1 && userVtPos > 75.9) {
         lettersFinished++;
-        document.getElementById("candidateV").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/vet.png";
+        document.getElementById("candidateU").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/costume.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
-      }
     } else if (userHzPos >= 0.371 && userHzPos <= 0.381 && userVtPos < 131.1 && userVtPos > 130.9) {
       if (letterOfCursor == "Y") {
         lettersFinished++;
@@ -634,11 +627,11 @@ function checkIfCompletingWord() {
         // case "N":
         //   netSound.play();
         //   break;
-        // case "P":
-        //   petSound.play();
+        // case "G":
+        //   grillSound.play();
         //   break;
         // case "U":
-        //   blueSound.play();
+        //   costumeSound.play();
         //   break;
         // case "V":
         //   vetSound.play();
@@ -666,7 +659,7 @@ function checkIfCompletingWord() {
 }
 
 function checkIfNeedsToFall() {
-  if (onCloudJet() || onCloudVetGreen() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudPet() ) {
+  if (onCloudJet() || onCloudCostume() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudGrill() ) {
     ;
   } else {
     jump(0);
@@ -680,7 +673,7 @@ function onCloudJet() {
   return false;
 }
 
-function onCloudVetGreen() {
+function onCloudCostume() {
   if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos == 76) {
     return true;
   }
@@ -708,7 +701,7 @@ function onCloudNet() {
   return false;
 }
 
-function onCloudPet() {
+function onCloudGrill() {
   if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos == 168) {
     return true;
   }
@@ -732,9 +725,9 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <source src="sounds/planet.wav" type="audio/wav">
 </audio>
 
-<audio id="greenSound">
-<source src="sounds/green.wav" type="audio/wav">
-</audio>
+<!-- <audio id="costumeSound">
+<source src="sounds/costume.wav" type="audio/wav">
+</audio> -->
 
 <!-- <audio id="jetSound">
 <source src="sounds/jet.wav" type="audio/wav">
@@ -744,9 +737,9 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <source src="sounds/net.wav" type="audio/wav">
 </audio>
 
-<audio id="petSound">
-<source src="sounds/pet.wav" type="audio/wav">
-</audio>
+<!-- <audio id="grillSound">
+<source src="sounds/grill.wav" type="audio/wav">
+</audio> -->
 
 <audio id="blueSound">
 <source src="sounds/blue.wav" type="audio/wav">
