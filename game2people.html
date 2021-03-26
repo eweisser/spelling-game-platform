@@ -388,7 +388,16 @@ function jump(velocity) {
       boingSound.play();
     }
 
-    if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos > 168) {            // "grill" cloud
+    if (userHzPos >= 0.033 && userHzPos <= 0.273 && userVtPos > 170) {            // "drum" cloud
+        if (userVtPos + velocity < 170) {
+          userVtPos = 170;
+          velocity = 0;
+          onSurface = true;
+          drawScreen();
+        } else {
+          drop(velocity);
+        }
+    } else if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos > 168) {            // "grill" cloud
         if (userVtPos + velocity < 168) {
           userVtPos = 168;
           velocity = 0;
@@ -567,6 +576,13 @@ function checkIfCompletingWord() {
         document.getElementById("candidateA").style.visibility = "hidden";
         document.getElementById("fullScreenVocabPic").src = "images/barbecue.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
+    } else if (userHzPos >= 0.177 && userHzPos <= 0.191 && userVtPos < 170.1 && userVtPos > 169.9) {
+      if (letterOfCursor == "D") {
+        lettersFinished++;
+        document.getElementById("candidateD").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/drum.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+      }
     } else if (userHzPos >= 0.81 && userHzPos <= 0.832 && userVtPos < 46.1 && userVtPos > 45.9) {
       if (letterOfCursor == "J") {
         lettersFinished++;
@@ -659,7 +675,7 @@ function checkIfCompletingWord() {
 }
 
 function checkIfNeedsToFall() {
-  if (onCloudJet() || onCloudCostume() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudGrill() ) {
+  if (onCloudJet() || onCloudCostume() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudGrill() || onCloudDrum() ) {
     ;
   } else {
     jump(0);
@@ -703,6 +719,13 @@ function onCloudNet() {
 
 function onCloudGrill() {
   if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos == 168) {
+    return true;
+  }
+  return false;
+}
+
+function onCloudDrum() {
+  if (userHzPos >= 0.033 && userHzPos <= 0.273 && userVtPos == 170) {
     return true;
   }
   return false;
