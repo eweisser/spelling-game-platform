@@ -289,11 +289,12 @@ display: inline-block;
 
 #gameOverScreen {
   background-color: #FFFFB4;
-  font-size: 15vw;
+  font-size: 12.5vw;
   text-align: center;
   display: block;
   position: fixed;
-  font-family: "Arial";
+  font-family: "Franklin Gothic";
+  text-shadow: 6px 6px #991;
   font-weight: bold;
   left: 0%;
   width: 100%;
@@ -310,11 +311,31 @@ display: inline-block;
   100%  {top: 0vh;}
 }
 
-#dancingLettersGif {
+#goodJobBar {
+  position: relative;
+  height: 33.33vh;
+  top: 0;
+}
+
+#dancingLettersRow1 {
   position: absolute;
-  bottom: 5vh;
-  height: 55vh;
-  left: 0vw;
+  height: 20vh;
+  width: 100%;
+  top: 33.33vh;
+
+}
+
+#dancingLettersRow2 {
+  position: absolute;
+  height: 20vh;
+  width: 100%;
+  top: 53.33vh;
+}
+
+.dancingLetter {
+  height: 100%;
+  position: relative;
+  top: 0px;
 }
 
 
@@ -331,7 +352,7 @@ var userHzPos = 0;
 var userVtPos;
 var onSurface = true;
 
-// words are: b(a)rbecue, (c)rab, (d)rum, (f)rog, (g)rill, (t)rumpet, cost(u)me (7)
+// words are: (p)ig, (h)op, d(o)g, jo(g), (j)ig, (d)ig, mount(a)in (7)
 var currentVocabWord = "";
 
 var randomNo;
@@ -782,13 +803,13 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <div id="pickALetterText">Pick a letter!</div>
 <div id="pickALetterImagesRow1">
 <img id="candidateA" class="grayLetter" src="images/grayA.png" onclick="pickLetter('A')" onmouseover="colorLetter('A')" onmouseout="getGrayLetter('A')">
-<img id="candidateC" class="grayLetter" src="images/grayC.png" onclick="pickLetter('C')" onmouseover="colorLetter('C')" onmouseout="getGrayLetter('C')">
 <img id="candidateD" class="grayLetter" src="images/grayD.png" onclick="pickLetter('D')" onmouseover="colorLetter('D')" onmouseout="getGrayLetter('D')">
+<img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
 </div>
 <div id="pickALetterImagesRow2">
-<img id="candidateF" class="grayLetter" src="images/grayF.png" onclick="pickLetter('F')" onmouseover="colorLetter('F')" onmouseout="getGrayLetter('F')">
-<img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
-<img id="candidateT" class="grayLetter" src="images/grayT.png" onclick="pickLetter('T')" onmouseover="colorLetter('T')" onmouseout="getGrayLetter('T')">
+<img id="candidateH" class="grayLetter" src="images/grayH.png" onclick="pickLetter('H')" onmouseover="colorLetter('H')" onmouseout="getGrayLetter('H')">
+<img id="candidateJ" class="grayLetter" src="images/grayJ.png" onclick="pickLetter('J')" onmouseover="colorLetter('J')" onmouseout="getGrayLetter('J')">
+<img id="candidateP" class="grayLetter" src="images/grayP.png" onclick="pickLetter('P')" onmouseover="colorLetter('P')" onmouseout="getGrayLetter('P')">
 <img id="candidateU" class="grayLetter" src="images/grayU.png" onclick="pickLetter('U')" onmouseover="colorLetter('U')" onmouseout="getGrayLetter('U')">
 </div>
 </div>
@@ -801,8 +822,21 @@ SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 <img id="fullScreenVocabPic" src="planet.jpg" onclick="getRidOfFullScreenVocabPic(this)">
 
 <div id="gameOverScreen">
-  GOOD JOB!
-<img id="dancingLettersGif" src="images/happy2.gif">
+
+  <div id="goodJobBar">GOOD JOB!</div>
+
+  <div id="dancingLettersRow1">
+  <img id="dancingA" class="dancingLetter" src="images/dancingA.gif">
+  <img id="dancingA" class="dancingLetter" src="images/dancingD.gif">
+  <img id="dancingG" class="dancingLetter" src="images/dancingG.gif">
+  </div>
+
+  <div id="dancingLettersRow2">
+  <img id="dancingJ" class="dancingLetter" src="images/dancingH.gif">
+  <img id="dancingJ" class="dancingLetter" src="images/dancingJ.gif">
+  <img id="dancingJ" class="dancingLetter" src="images/dancingO.gif">
+  <img id="dancingP" class="dancingLetter" src="images/dancingP.gif">
+  </div>
 </div>
 
 

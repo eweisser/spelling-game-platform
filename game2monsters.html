@@ -5,6 +5,11 @@
 <title>STORIX Monsters book 2</title>
 
 <!-- read about pointer lock or mouse lock at https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API ...there's also another link in the bookmarks-->
+<!-- https://www.artiestick.com/terms.htm
+https://www.artiestick.com/alpha-index.htm
+https://www.artiestick.com/links.htm -->
+
+
 
 <style>
 
@@ -255,11 +260,12 @@ display: inline-block;
 
 #gameOverScreen {
   background-color: #FFFFB4;
-  font-size: 15vw;
+  font-size: 12.5vw;
   text-align: center;
   display: block;
   position: fixed;
-  font-family: "Arial";
+  font-family: "Franklin Gothic";
+  text-shadow: 6px 6px #991;
   font-weight: bold;
   left: 0%;
   width: 100%;
@@ -276,18 +282,31 @@ display: inline-block;
   100%  {top: 0vh;}
 }
 
+#goodJobBar {
+  position: relative;
+  height: 33.33vh;
+  top: 0;
+}
+
 #dancingLettersRow1 {
-  background-color: #FC0;
-  height: 15vh;
+  position: absolute;
+  height: 20vh;
+  width: 100%;
+  top: 33.33vh;
+
 }
 
 #dancingLettersRow2 {
-  background-color: #0CF;
-  height: 15vh;
+  position: absolute;
+  height: 20vh;
+  width: 100%;
+  top: 53.33vh;
 }
 
 .dancingLetter {
   height: 100%;
+  position: relative;
+  top: 0px;
 }
 
 
@@ -348,9 +367,6 @@ window.onload = function() {
   var hippoStartGifPos = document.getElementById("hippoStartGif").getBoundingClientRect();
   var bodyDimensions = document.body.getBoundingClientRect();
   document.getElementById("hippoStartGif").style.left = (bodyDimensions.width-hippoStartGifPos.width)/2 + "px";
-
-  var happyHippoGifPos = document.getElementById("happyHippoGif").getBoundingClientRect();
-  document.getElementById("happyHippoGif").style.left = (bodyDimensions.width-happyHippoGifPos.width)/2 + "px";
 
   fullScreenVocabPic.addEventListener('animationend', () => {
     document.getElementById("fullScreenVocabPic").style.animationPlayState = "paused";
@@ -628,6 +644,9 @@ function checkIfCompletingWord() {
         case "G":
           greenSound.play();
           break;
+        case "J":
+          jetSound.play();
+          break;
         case "N":
           netSound.play();
           break;
@@ -645,7 +664,7 @@ function checkIfCompletingWord() {
           break;
       }
       setTimeout(function(){
-        if (lettersFinished == 2) {
+        if (lettersFinished == 1) {
           document.getElementById("gameOverScreen").style.animationPlayState = "running";
         } else {
           document.getElementById("fullScreenVocabPic").style.top = "100vh";
@@ -733,9 +752,9 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <source src="sounds/green.wav" type="audio/wav">
 </audio>
 
-<!-- <audio id="jetSound">
+<audio id="jetSound">
 <source src="sounds/jet.wav" type="audio/wav">
-</audio> -->
+</audio>
 
 <audio id="netSound">
 <source src="sounds/net.wav" type="audio/wav">
@@ -801,22 +820,23 @@ SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
 <img id="fullScreenVocabPic" src="planet.jpg" onclick="getRidOfFullScreenVocabPic(this)">
 
 <div id="gameOverScreen">
-  GOOD JOB!
-<div id="dancingLettersRow1">
-<img id="dancingA" class="dancingLetter" src="images/dancingA.gif">
-<img id="dancingG" class="dancingLetter" src="images/dancingG.gif">
-<img id="dancingJ" class="dancingLetter" src="images/dancingJ.gif">
-<img id="dancingN" class="dancingLetter" src="images/dancingN.gif">
-</div>
-<div id="dancingLettersRow2">
-<img id="dancingP" class="dancingLetter" src="images/dancingP.gif">
-<img id="dancingU" class="dancingLetter" src="images/dancingU.gif">
-<img id="dancingV" class="dancingLetter" src="images/dancingV.gif">
-<img id="dancingY" class="dancingLetter" src="images/dancingY.gif">
-</div>
-</div>
 
-<div id="hitbox"></div>
+  <div id="goodJobBar">GOOD JOB!</div>
+
+  <div id="dancingLettersRow1">
+  <img id="dancingA" class="dancingLetter" src="images/dancingA.gif">
+  <img id="dancingG" class="dancingLetter" src="images/dancingG.gif">
+  <img id="dancingJ" class="dancingLetter" src="images/dancingJ.gif">
+  <img id="dancingN" class="dancingLetter" src="images/dancingN.gif">
+  </div>
+
+  <div id="dancingLettersRow2">
+  <img id="dancingP" class="dancingLetter" src="images/dancingP.gif">
+  <img id="dancingU" class="dancingLetter" src="images/dancingU.gif">
+  <img id="dancingV" class="dancingLetter" src="images/dancingV.gif">
+  <img id="dancingY" class="dancingLetter" src="images/dancingY.gif">
+  </div>
+</div>
 
 
 
