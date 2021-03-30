@@ -547,6 +547,17 @@ function pickLetter(pickedLetter) {
       if (x < windowWidth/2) {    // in our case, if x > 640
                                     // since the window is half the width of the world, this means "when the character is halfway
                                     // across the initial screen / 1/4 across the world
+        //var pos = window.getComputedStyle(document.getElementById("fullScreenVocabPic")).top;
+        // var cursorLeftJustNumbers = cursor.style.left.slice(0,-2);
+        // pos = pos.slice(0,-2);
+        // var differenceSplit = (x-cursorLeftJustNumbers)/20;
+        // while (cursor.style.left != x + "px") {
+          // cursorLeftJustNumbers = cursor.style.left.slice(0,-2);
+          // var needToAddPx = Number(cursorLeftJustNumbers) + Number(differenceSplit);
+          // alert(needToAddPx + " / " + cursorLeftJustNumbers + " / " + differenceSplit);
+          // cursor.style.left = needToAddPx + "px";
+          // console.log(cursor.style.left);
+        // }
         cursor.style.left = x + "px";
       } else if (x >= windowWidth/2 && x <= windowWidth*3/2) {    // if the character is 1/4 to 3/4 across the world...
         cursor.style.left = windowWidth/2 + "px";
@@ -664,7 +675,7 @@ function checkIfCompletingWord() {
           break;
       }
       setTimeout(function(){
-        if (lettersFinished == 1) {
+        if (lettersFinished == 8) {
           document.getElementById("gameOverScreen").style.animationPlayState = "running";
         } else {
           document.getElementById("fullScreenVocabPic").style.top = "100vh";

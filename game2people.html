@@ -592,49 +592,49 @@ function getGrayLetter(whichLetter) {
 function checkIfCompletingWord() {
   var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
   if (document.getElementById("candidate" + letterOfCursor).style.visibility != "hidden") {
-    if (letterOfCursor == "A" && userHzPos >= 0.057 && userHzPos <= 0.064 && userVtPos < 88.1 && userVtPos > 87.9) {
+    if (letterOfCursor == "O" && userHzPos >= 0.057 && userHzPos <= 0.064 && userVtPos < 88.1 && userVtPos > 87.9) {
         lettersFinished++;
-        document.getElementById("candidateA").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/barbecue.png";
+        document.getElementById("candidateO").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/dog.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
     } else if (userHzPos >= 0.761 && userHzPos <= 0.775 && userVtPos < 125.1 && userVtPos > 124.9) {
-      if (letterOfCursor == "C") {
+      if (letterOfCursor == "H") {
         lettersFinished++;
-        document.getElementById("candidateC").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/crab.png";
+        document.getElementById("candidateH").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/hop.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
     } else if (userHzPos >= 0.177 && userHzPos <= 0.191 && userVtPos < 170.1 && userVtPos > 169.9) {
-      if (letterOfCursor == "D") {
+      if (letterOfCursor == "J") {
         lettersFinished++;
-        document.getElementById("candidateD").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/drum.png";
+        document.getElementById("candidateJ").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/jig.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
     } else if (userHzPos >= 0.818 && userHzPos <= 0.828 && userVtPos < 46.1 && userVtPos > 45.9) {
-      if (letterOfCursor == "F") {
-        lettersFinished++;
-        document.getElementById("candidateF").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/frog.png";
-        var showVocabPicFullScreen = setInterval(frame, 5);
-      }
-    } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
       if (letterOfCursor == "G") {
         lettersFinished++;
         document.getElementById("candidateG").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/grill.png";
+        document.getElementById("fullScreenVocabPic").src = "images/jog.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
-    } else if (letterOfCursor == "U" && userHzPos >= 0.657 && userHzPos <= 0.667 && userVtPos < 76.1 && userVtPos > 75.9) {
+    } else if (userHzPos >= 0.735 && userHzPos <= 0.757 && userVtPos < 168.1 && userVtPos > 167.9) {
+      if (letterOfCursor == "P") {
         lettersFinished++;
-        document.getElementById("candidateU").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/costume.png";
+        document.getElementById("candidateP").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/pig.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
-    } else if (userHzPos >= 0.363 && userHzPos <= 0.376 && userVtPos < 131.1 && userVtPos > 130.9) {
-      if (letterOfCursor == "T") {
+      }
+    } else if (letterOfCursor == "D" && userHzPos >= 0.657 && userHzPos <= 0.667 && userVtPos < 76.1 && userVtPos > 75.9) {
         lettersFinished++;
-        document.getElementById("candidateT").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/trumpet.png";
+        document.getElementById("candidateD").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/dig.png";
+        var showVocabPicFullScreen = setInterval(frame, 5);
+    } else if (userHzPos >= 0.301 && userHzPos <= 0.311 && userVtPos < 131.1 && userVtPos > 130.9) {
+      if (letterOfCursor == "A") {
+        lettersFinished++;
+        document.getElementById("candidateA").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/mountain.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
       }
     }
@@ -689,56 +689,56 @@ function checkIfCompletingWord() {
 }
 
 function checkIfNeedsToFall() {
-  if (onCloudJet() || onCloudCostume() || onCloudBarbecue() || onCloudBlueYellow() || onCloudNet() || onCloudGrill() || onCloudDrum() ) {
+  if (onCloudJog() || onCloudDig() || onCloudDog() || onCloudMountain() || onCloudHop() || onCloudPig() || onCloudJig() ) {
     ;
   } else {
     jump(0);
   }
 }
 
-function onCloudJet() {
+function onCloudJog() {
   if (userHzPos >= 0.78 && userVtPos == 46) {
     return true;
   }
   return false;
 }
 
-function onCloudCostume() {
+function onCloudDig() {
   if (userHzPos >= 0.3712 && userHzPos <= 0.715 && userVtPos == 76) {
     return true;
   }
   return false;
 }
 
-function onCloudBarbecue() {
+function onCloudDog() {
   if (userHzPos >= 0.0335 && userHzPos <= 0.2396 && userVtPos == 88) {
     return true;
   }
   return false;
 }
 
-function onCloudBlueYellow() {
+function onCloudMountain() {
   if (userHzPos >= 0.17 && userHzPos <= 0.4388 && userVtPos == 131) {
     return true;
   }
   return false;
 }
 
-function onCloudNet() {
+function onCloudHop() {
   if (userHzPos >= 0.68 && userHzPos <= 0.959 && userVtPos == 125) {
     return true;
   }
   return false;
 }
 
-function onCloudGrill() {
+function onCloudPig() {
   if (userHzPos >= 0.62 && userHzPos <= 0.82 && userVtPos == 168) {
     return true;
   }
   return false;
 }
 
-function onCloudDrum() {
+function onCloudJig() {
   if (userHzPos >= 0.033 && userHzPos <= 0.273 && userVtPos == 170) {
     return true;
   }
@@ -809,8 +809,8 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <div id="pickALetterImagesRow2">
 <img id="candidateH" class="grayLetter" src="images/grayH.png" onclick="pickLetter('H')" onmouseover="colorLetter('H')" onmouseout="getGrayLetter('H')">
 <img id="candidateJ" class="grayLetter" src="images/grayJ.png" onclick="pickLetter('J')" onmouseover="colorLetter('J')" onmouseout="getGrayLetter('J')">
+<img id="candidateO" class="grayLetter" src="images/grayO.png" onclick="pickLetter('O')" onmouseover="colorLetter('O')" onmouseout="getGrayLetter('O')">
 <img id="candidateP" class="grayLetter" src="images/grayP.png" onclick="pickLetter('P')" onmouseover="colorLetter('P')" onmouseout="getGrayLetter('P')">
-<img id="candidateU" class="grayLetter" src="images/grayU.png" onclick="pickLetter('U')" onmouseover="colorLetter('U')" onmouseout="getGrayLetter('U')">
 </div>
 </div>
 
