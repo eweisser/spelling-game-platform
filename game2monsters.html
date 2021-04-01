@@ -677,6 +677,7 @@ function checkIfCompletingWord() {
       setTimeout(function(){
         if (lettersFinished == 8) {
           document.getElementById("gameOverScreen").style.animationPlayState = "running";
+          document.getElementById("characterCursor").style.display = "none";
         } else {
           document.getElementById("fullScreenVocabPic").style.top = "100vh";
           document.getElementById("letterSelectionCurtain").style.bottom = "0px";
@@ -684,7 +685,6 @@ function checkIfCompletingWord() {
       }, 2500);
       clearInterval(showVocabPicFullScreen);
     } else {
-      //alert(pos);
       pos = pos - 8;      // this is how fast is moves up the screen
       document.getElementById("fullScreenVocabPic").style.top = pos + "px";
     }
@@ -740,10 +740,6 @@ function onCloudPet() {
     return true;
   }
   return false;
-}
-
-function getRidOfFullScreenVocabPic(imgElement) {
-
 }
 
 </script>
