@@ -628,10 +628,10 @@ function checkIfCompletingWord() {
         document.getElementById("candidateD").style.visibility = "hidden";
         document.getElementById("fullScreenVocabPic").src = "images/dig.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
-    } else if (letterOfCursor == "A" && userHzPos >= 0.301 && userHzPos <= 0.310 && userVtPos < 131.1 && userVtPos > 130.9) {
+    } else if (letterOfCursor == "V" && userHzPos >= 0.301 && userHzPos <= 0.310 && userVtPos < 131.1 && userVtPos > 130.9) {
         lettersFinished++;
-        document.getElementById("candidateA").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/mountain.png";
+        document.getElementById("candidateV").style.visibility = "hidden";
+        document.getElementById("fullScreenVocabPic").src = "images/dive.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
     }
   }
@@ -644,14 +644,11 @@ function checkIfCompletingWord() {
       var letterOfCursor = document.getElementById("characterCursor").src.charAt(document.getElementById("characterCursor").src.length-5);
       document.getElementById("fullScreenVocabPic").style.top = "0px";
       switch (letterOfCursor) {
-        // case "A":
-        //   planetSound.play();
-        //   break;
-        // case "G":
-        //   greenSound.play();
-        //   break;
         case "D":
           digSound.play();
+          break;
+        case "G":
+          jogSound.play();
           break;
         case "H":
           hopSound.play();
@@ -659,15 +656,15 @@ function checkIfCompletingWord() {
         case "J":
           jigSound.play();
           break;
+          // case "O":
+          //   dogSound.play();
+          //   break;
         case "P":
           pigSound.play();
           break;
-        // case "V":
-        //   vetSound.play();
-        //   break;
-        // case "Y":
-        //   yellowSound.play();
-        //   break;
+        case "V":
+          diveSound.play();
+          break;
       }
       setTimeout(function(){
         if (lettersFinished == 7) {
@@ -689,7 +686,7 @@ function checkIfCompletingWord() {
 }
 
 function checkIfNeedsToFall() {
-  if (onCloudJog() || onCloudDig() || onCloudDog() || onCloudMountain() || onCloudHop() || onCloudPig() || onCloudJig() ) {
+  if (onCloudJog() || onCloudDig() || onCloudDog() || onCloudDive() || onCloudHop() || onCloudPig() || onCloudJig() ) {
     ;
   } else {
     jump(0);
@@ -717,7 +714,7 @@ function onCloudDog() {
   return false;
 }
 
-function onCloudMountain() {
+function onCloudDive() {
   if (userHzPos >= 0.17 && userHzPos <= 0.4388 && userVtPos == 131) {
     return true;
   }
@@ -762,6 +759,10 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <source src="sounds/dig.wav" type="audio/wav">
 </audio>
 
+<audio id="jogSound">
+<source src="sounds/jog.wav" type="audio/wav">
+</audio>
+
 <audio id="pigSound">
 <source src="sounds/pig.wav" type="audio/wav">
 </audio>
@@ -772,6 +773,10 @@ function getRidOfFullScreenVocabPic(imgElement) {
 
 <audio id="jigSound">
 <source src="sounds/jig.wav" type="audio/wav">
+</audio>
+
+<audio id="diveSound">
+<source src="sounds/dive.wav" type="audio/wav">
 </audio>
 
 <div id="wholescreen">
@@ -786,15 +791,15 @@ function getRidOfFullScreenVocabPic(imgElement) {
 <div id="letterSelectionInnerBkgd"></div>
 <div id="pickALetterText">Pick a letter!</div>
 <div id="pickALetterImagesRow1">
-<img id="candidateA" class="grayLetter" src="images/grayA.png" onclick="pickLetter('A')" onmouseover="colorLetter('A')" onmouseout="getGrayLetter('A')">
 <img id="candidateD" class="grayLetter" src="images/grayD.png" onclick="pickLetter('D')" onmouseover="colorLetter('D')" onmouseout="getGrayLetter('D')">
 <img id="candidateG" class="grayLetter" src="images/grayG.png" onclick="pickLetter('G')" onmouseover="colorLetter('G')" onmouseout="getGrayLetter('G')">
+<img id="candidateH" class="grayLetter" src="images/grayH.png" onclick="pickLetter('H')" onmouseover="colorLetter('H')" onmouseout="getGrayLetter('H')">
 </div>
 <div id="pickALetterImagesRow2">
-<img id="candidateH" class="grayLetter" src="images/grayH.png" onclick="pickLetter('H')" onmouseover="colorLetter('H')" onmouseout="getGrayLetter('H')">
 <img id="candidateJ" class="grayLetter" src="images/grayJ.png" onclick="pickLetter('J')" onmouseover="colorLetter('J')" onmouseout="getGrayLetter('J')">
 <img id="candidateO" class="grayLetter" src="images/grayO.png" onclick="pickLetter('O')" onmouseover="colorLetter('O')" onmouseout="getGrayLetter('O')">
 <img id="candidateP" class="grayLetter" src="images/grayP.png" onclick="pickLetter('P')" onmouseover="colorLetter('P')" onmouseout="getGrayLetter('P')">
+<img id="candidateV" class="grayLetter" src="images/grayV.png" onclick="pickLetter('V')" onmouseover="colorLetter('V')" onmouseout="getGrayLetter('V')">
 </div>
 </div>
 
@@ -810,16 +815,16 @@ SPELL&nbsp;&nbsp;&nbsp;&nbsp;IT!
   <div id="goodJobBar">GOOD JOB!</div>
 
   <div id="dancingLettersRow1">
-  <img id="dancingA" class="dancingLetter" src="images/dancingA.gif">
-  <img id="dancingA" class="dancingLetter" src="images/dancingD.gif">
+  <img id="dancingD" class="dancingLetter" src="images/dancingD.gif">
   <img id="dancingG" class="dancingLetter" src="images/dancingG.gif">
+  <img id="dancingH" class="dancingLetter" src="images/dancingH.gif">
   </div>
 
   <div id="dancingLettersRow2">
-  <img id="dancingJ" class="dancingLetter" src="images/dancingH.gif">
   <img id="dancingJ" class="dancingLetter" src="images/dancingJ.gif">
-  <img id="dancingJ" class="dancingLetter" src="images/dancingO.gif">
+  <img id="dancingO" class="dancingLetter" src="images/dancingO.gif">
   <img id="dancingP" class="dancingLetter" src="images/dancingP.gif">
+  <img id="dancingV" class="dancingLetter" src="images/dancingV.gif">
   </div>
 </div>
 
