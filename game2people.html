@@ -628,10 +628,10 @@ function checkIfCompletingWord() {
         document.getElementById("candidateD").style.visibility = "hidden";
         document.getElementById("fullScreenVocabPic").src = "images/dig.png";
         var showVocabPicFullScreen = setInterval(frame, 5);
-    } else if (letterOfCursor == "V" && userHzPos >= 0.301 && userHzPos <= 0.310 && userVtPos < 131.1 && userVtPos > 130.9) {
+    } else if (letterOfCursor == "V" && userHzPos >= 0.359 && userHzPos <= 0.364 && userVtPos < 131.1 && userVtPos > 130.9) {
         lettersFinished++;
         document.getElementById("candidateV").style.visibility = "hidden";
-        document.getElementById("fullScreenVocabPic").src = "images/dive.png";
+        document.getElementById("fullScreenVocabPic").src = "images/dive.gif";
         var showVocabPicFullScreen = setInterval(frame, 5);
     }
   }
@@ -656,9 +656,9 @@ function checkIfCompletingWord() {
         case "J":
           jigSound.play();
           break;
-          // case "O":
-          //   dogSound.play();
-          //   break;
+        case "O":
+          dogSound.play();
+          break;
         case "P":
           pigSound.play();
           break;
@@ -757,6 +757,10 @@ function getRidOfFullScreenVocabPic(imgElement) {
 
 <audio id="digSound">
 <source src="sounds/dig.wav" type="audio/wav">
+</audio>
+
+<audio id="dogSound">
+<source src="sounds/dog.wav" type="audio/wav">
 </audio>
 
 <audio id="jogSound">
